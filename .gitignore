@@ -1,5 +1,6 @@
 # Local diagnostic reports and evidence must never be published.
 nosana-support-*.txt
+nosana-frp-*.txt
 frpc-logs-*.log
 frpc-saved-*.tar.gz
 reports/

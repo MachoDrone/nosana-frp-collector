@@ -201,7 +201,7 @@ class MainCollectionTests(unittest.TestCase):
                 screen = io.StringIO()
                 stack.enter_context(contextlib.redirect_stdout(screen))
                 result = collector.main(['--output-dir', temporary, *extra_args])
-                reports = list(Path(temporary).glob('nosana-support-*.txt'))
+                reports = list(Path(temporary).glob('nosana-frp-*.txt'))
                 self.assertEqual(len(reports), 1)
                 report = reports[0].read_text()
                 self.assertIn('Send this file: ' + str(reports[0]), screen.getvalue())

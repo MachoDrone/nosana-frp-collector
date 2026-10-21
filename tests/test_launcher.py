@@ -90,7 +90,7 @@ pathlib.Path(target).write_bytes(pathlib.Path(os.environ["TEST_PAYLOAD"]).read_b
     def test_actual_collector_version_works_through_pipe(self):
         result = self.run_launcher(args=("--version",))
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("0.1.0", result.stdout)
+        self.assertIn("0.1.1", result.stdout)
         self.assert_clean()
 
     def test_corrupted_payload_is_never_executed(self):
@@ -149,7 +149,7 @@ pathlib.Path(target).write_bytes(pathlib.Path(os.environ["TEST_PAYLOAD"]).read_b
         download = json.loads(self.called.read_text())
         self.assertEqual(download["name"], "wget")
         self.assertIn("--https-only", download["args"])
-        self.assertTrue(download["args"][-1].endswith("/v0.1.0/collector.py"))
+        self.assertTrue(download["args"][-1].endswith("/v0.1.1/collector.py"))
         self.assert_clean()
 
     def test_arguments_cwd_and_private_permissions_are_preserved(self):

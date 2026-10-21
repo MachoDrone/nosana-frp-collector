@@ -1,4 +1,4 @@
-# Nosana support collector
+# Nosana FRP collector
 
 Collect the logs and connection details needed to investigate Nosana's **“Node API is detected offline”** and FRP **“router config conflict”** messages. The collector prints recent log excerpts and a plain-language summary for a screenshot, then saves a fuller text report and prints its filename.
 
@@ -9,18 +9,18 @@ This is an independent support tool for the **Docker → Podman** installation l
 Paste this into a Bash terminal **on the affected PC**:
 
 ```bash
-bash -o pipefail -c 'curl -fsSL https://raw.githubusercontent.com/MachoDrone/nosana-support-collector/main/start.sh | bash'
+bash -o pipefail -c 'curl -fsSL https://raw.githubusercontent.com/MachoDrone/nosana-frp-collector/main/start.sh | bash'
 ```
 
 Or use `wget`:
 
 ```bash
-bash -o pipefail -c 'wget -qO- https://raw.githubusercontent.com/MachoDrone/nosana-support-collector/main/start.sh | bash'
+bash -o pipefail -c 'wget -qO- https://raw.githubusercontent.com/MachoDrone/nosana-frp-collector/main/start.sh | bash'
 ```
 
 **No manual download, checkout, or installation is needed.** The launcher automatically fetches the versioned Python collector into a temporary directory, verifies its SHA-256 checksum against the value embedded in the launcher, runs it, and removes the temporary copy. The report stays on your PC. The outer Bash command reports a failure if fetching the launcher fails.
 
-The `main` launcher currently selects **v0.1.0**. To keep using this release's launcher, replace `/main/start.sh` with `/v0.1.0/start.sh` in the command. The checksum checks that the payload matches the launcher; the launcher itself is fetched over HTTPS from this repository.
+The `main` launcher currently selects **v0.1.1**. To keep using this release's launcher, replace `/main/start.sh` with `/v0.1.1/start.sh` in the command. The checksum checks that the payload matches the launcher; the launcher itself is fetched over HTTPS from this repository.
 
 ## Requirements
 
@@ -48,7 +48,7 @@ The terminal shows recent FRP logs, relevant Nosana API/DNS events, and a summar
 The final line tells you what to share:
 
 ```text
-Send this file: /your/current/directory/nosana-support-<hostname>-<UTC timestamp>.txt
+Send this file: /your/current/directory/nosana-frp-<hostname>-<UTC timestamp>.txt
 ```
 
 The report is created in the current directory with permissions `0600` (owner read/write only). It is never uploaded automatically. A screenshot of the final summary is useful for an initial review; the text report provides more context and searchable timestamps.
@@ -58,7 +58,7 @@ The report is created in the current directory with permissions `0600` (owner re
 Pass options after `bash -s --`. For example, collect retained logs and state without DNS/HTTP probes:
 
 ```bash
-bash -o pipefail -c 'curl -fsSL https://raw.githubusercontent.com/MachoDrone/nosana-support-collector/main/start.sh | bash -s -- --logs-only'
+bash -o pipefail -c 'curl -fsSL https://raw.githubusercontent.com/MachoDrone/nosana-frp-collector/main/start.sh | bash -s -- --logs-only'
 ```
 
 | Option | Purpose |
@@ -72,7 +72,7 @@ bash -o pipefail -c 'curl -fsSL https://raw.githubusercontent.com/MachoDrone/nos
 For the full help, run:
 
 ```bash
-bash -o pipefail -c 'curl -fsSL https://raw.githubusercontent.com/MachoDrone/nosana-support-collector/main/start.sh | bash -s -- --help'
+bash -o pipefail -c 'curl -fsSL https://raw.githubusercontent.com/MachoDrone/nosana-frp-collector/main/start.sh | bash -s -- --help'
 ```
 
 ## How to interpret the results

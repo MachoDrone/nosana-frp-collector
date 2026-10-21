@@ -13,7 +13,7 @@ import tempfile
 import threading
 from pathlib import Path
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 ROOT = '/var/lib/containers/storage/overlay-containers'
 DEFAULT_OUTER = 'podman'
 OUTER = DEFAULT_OUTER
@@ -258,7 +258,7 @@ def arguments(argv=None):
     parser = argparse.ArgumentParser(
         description='Read-only diagnostics for Nosana hosts using Docker with nested Podman. '
                     'Print a support summary and save a private text report; no reports are uploaded.')
-    parser.add_argument('--version', action='version', version='nosana-support-collector ' + VERSION)
+    parser.add_argument('--version', action='version', version='nosana-frp-collector ' + VERSION)
     parser.add_argument('--container', default=DEFAULT_OUTER, metavar='NAME',
                         help='outer Docker container name (default: podman)')
     parser.add_argument('--output-dir', default='.', metavar='PATH',
@@ -282,7 +282,7 @@ def main(argv=None):
     collected = dt.datetime.now(dt.timezone.utc)
     stamp = collected.strftime('%Y%m%dT%H%M%S.%fZ')
     hostname = os.uname().nodename
-    report = options.output_dir / ('nosana-support-%s-%s.txt' % (re.sub(r'[^A-Za-z0-9_.-]', '_', hostname), stamp))
+    report = options.output_dir / ('nosana-frp-%s-%s.txt' % (re.sub(r'[^A-Za-z0-9_.-]', '_', hostname), stamp))
     print('Collecting read-only diagnostics from Docker container %s...' % OUTER, flush=True)
     state = outer_state()
     raw, _ = copied_file(ROOT + '/containers.json', 8 * 1024 * 1024)
@@ -300,7 +300,7 @@ def main(argv=None):
             match = FRP_NAME.fullmatch(name)
             if match:
                 frps.append((cid, name, match.group(1)))
-    summary = ['NOSANA SUPPORT SUMMARY', 'Collector version: ' + VERSION,
+    summary = ['NOSANA FRP SUMMARY', 'Collector version: ' + VERSION,
                'PC: ' + hostname, 'Collected UTC: ' + collected.isoformat(),
                'Outer Docker container %s: %s' % (OUTER, state['status']),
                'Retained FRP API containers: ' + str(len(frps))]

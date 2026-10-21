@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Download and run the pinned, verified collector without installing it.
 
-COLLECTOR_REF='v0.1.0'
-COLLECTOR_SHA256='cc20a3a76df03800757fcc4537cf858edec8eb4b0c29e888c6708fe72de2c513'
+COLLECTOR_REF='v0.1.1'
+COLLECTOR_SHA256='914e47c31bc807f6ad4a167aa35cf3768b661403b44a73c57dbbbb539a1bfa40'
 
 main() (
   set -euo pipefail
   umask 077
 
-  local collector_url="https://raw.githubusercontent.com/MachoDrone/nosana-support-collector/${COLLECTOR_REF}/collector.py"
+  local collector_url="https://raw.githubusercontent.com/MachoDrone/nosana-frp-collector/${COLLECTOR_REF}/collector.py"
   local collector_tmp collector_script collector_status
 
   if ! command -v python3 >/dev/null 2>&1; then
@@ -24,7 +24,7 @@ main() (
     return 1
   fi
 
-  collector_tmp=$(mktemp -d "${TMPDIR:-/tmp}/nosana-support.XXXXXXXX")
+  collector_tmp=$(mktemp -d "${TMPDIR:-/tmp}/nosana-frp.XXXXXXXX")
   trap 'rm -rf -- "$collector_tmp"' EXIT
   collector_script="$collector_tmp/collector.py"
 
