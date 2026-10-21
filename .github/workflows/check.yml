@@ -1,0 +1,45 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-checks:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.12"]
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check syntax
+        run: |
+          bash -n start.sh
+          python -m py_compile collector.py
+      - name: Check pinned collector checksum
+        run: |
+          python - <<'PY'
+          import hashlib
+          import pathlib
+          import re
+
+          launcher = pathlib.Path("start.sh").read_text(encoding="utf-8")
+          match = re.search(r"^COLLECTOR_SHA256=['\"]([0-9a-f]{64})['\"]$", launcher, re.M)
+          if not match:
+              raise SystemExit("Missing COLLECTOR_SHA256 in start.sh")
+          actual = hashlib.sha256(pathlib.Path("collector.py").read_bytes()).hexdigest()
+          if actual != match.group(1):
+              raise SystemExit("start.sh checksum does not match collector.py")
+          print("Pinned collector checksum matches.")
+          PY
+      - name: Run offline tests
+        run: python -m unittest discover -s tests -v

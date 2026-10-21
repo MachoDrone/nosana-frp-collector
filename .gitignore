@@ -1,0 +1,33 @@
+# Local diagnostic reports and evidence must never be published.
+nosana-support-*.txt
+frpc-logs-*.log
+frpc-saved-*.tar.gz
+reports/
+evidence/
+tests/fixtures/real/
+*.log
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+
+# Credentials and local configuration.
+.env
+.env.*
+*.pem
+*.key
+id_ed25519
+id_rsa
+credentials*
+
+# Python and editor state.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+.DS_Store
+*.swp
+*~
